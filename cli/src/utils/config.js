@@ -43,6 +43,7 @@ const make_default_options = () => ({
   rdb_password: null,
   rdb_timeout: null,
 
+  duration: '1day',
   token_secret: null,
   allow_anonymous: false,
   allow_unauthenticated: false,
