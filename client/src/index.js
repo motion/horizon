@@ -19,6 +19,7 @@ function Horizon({
   host = defaultHost,
   secure = defaultSecure,
   path = 'horizon',
+  company = '',
   lazyWrites = false,
   authType = 'unauthenticated',
   keepalive = 60,
@@ -114,13 +115,31 @@ function Horizon({
 
   return horizon
 
+  function injectCompany(type, options) {
+    const companyInfo = { companyId: company }
+    if (type === 'query' || type === 'subscribe') {
+      if (options.find_all) {
+        Object.assign(options.find_all[0], companyInfo)
+      } else if (options.find) {
+        Object.assign(options.find, companyInfo)
+      } else {
+        options.find_all = [ companyInfo ]
+      }
+    } else if (options.data) {
+      options.data.forEach(entry => Object.assign(entry, companyInfo))
+    }
+    return options
+  }
   // Sends a horizon protocol request to the server, and pulls the data
   // portion of the response out.
   function sendRequest(type, options) {
     // Both remove and removeAll use the type 'remove' in the protocol
     const normalizedType = type === 'removeAll' ? 'remove' : type
     return socket
-      .hzRequest({ type: normalizedType, options }) // send the raw request
+      .hzRequest({  // send the raw request
+        type: normalizedType,
+        options: injectCompany(type, options),
+      })
       .takeWhile(resp => resp.state !== 'complete')
   }
 }
