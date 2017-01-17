@@ -1,7 +1,6 @@
 'use strict';
 
 const auth_utils = require('./utils');
-const logger = require('../logger');
 
 const https = require('https');
 const querystring = require('querystring');
@@ -22,8 +21,6 @@ function auth0(horizon, raw_options) {
   const client_secret = options.secret;
   const host = options.host;
 
-  const self_url = (self_host, path) =>
-    url.format({ protocol: 'https', host: self_host, pathname: path });
 
   const make_acquire_url = (state, redirect_uri) =>
     url.format({ protocol: 'https',
@@ -35,9 +32,9 @@ function auth0(horizon, raw_options) {
     const req = https.request({ method: 'POST', host, path: '/oauth/token',
                                 headers: { 'Content-type': 'application/x-www-form-urlencoded' } });
     req.write(querystring.stringify({
-        client_id, redirect_uri, client_secret, code,
-        grant_type: 'authorization_code'
-      }));
+      client_id, redirect_uri, client_secret, code,
+      grant_type: 'authorization_code',
+    }));
     return req;
   };
 
@@ -45,7 +42,15 @@ function auth0(horizon, raw_options) {
     https.request({ host, path: '/userinfo',
                     headers: { Authorization: `Bearer ${access_token}` } });
 
-  const extract_id = (user_info) => user_info && user_info.user_id;
+  const extract_id = (user_info) => {
+    if (user_info) {
+      return {
+        user_id: user_info.user_id,
+        companies: user_info.user_metadata.companies || [],
+      };
+    }
+    return null;
+  };
 
 
   auth_utils.oauth2({

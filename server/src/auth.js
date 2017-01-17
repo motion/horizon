@@ -88,9 +88,10 @@ class Auth {
     }
   }
 
-  new_user_row(id) {
+  new_user_row(id, companies) {
     return {
       id,
+      companies,
       groups: [ 'default', this._new_user_group ],
       [writes.version_field]: 0,
     };
@@ -98,8 +99,11 @@ class Auth {
 
   // TODO: maybe we should write something into the user data to track open sessions/tokens
   generate(provider, info) {
+    const companies = (info && info.companies) || [];
+    const user_id = typeof info === 'string' ? info : info.user_id;
+
     return Promise.resolve().then(() => {
-      const key = this.auth_key(provider, info);
+      const key = this.auth_key(provider, user_id);
       const db = r.db(this._parent._name);
 
       const insert = (table, row) =>
@@ -113,7 +117,7 @@ class Auth {
 
       if (this._create_new_users) {
         query = insert('hz_users_auth', { id: key, user_id: r.uuid() })
-          .do((auth_user) => insert('users', this.new_user_row(auth_user('user_id'))));
+          .do((auth_user) => insert('users', this.new_user_row(auth_user('user_id'), companies)));
       }
 
       return query.run(this._parent._reql_conn.connection()).catch((err) => {
