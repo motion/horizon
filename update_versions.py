@@ -31,7 +31,7 @@ def main(version):
 
     with rewrite('./cli/package.json') as cli_pkg:
         cli_pkg['version'] = version
-        cli_pkg['dependencies']['@horizon/server'] = version
+        cli_pkg['dependencies']['macro-horizon-server'] = version
 
 
 if __name__ == '__main__':

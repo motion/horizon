@@ -1,8 +1,8 @@
 'use strict';
 
-const horizon_server = require('@horizon/server');
-const horizon_index = require('@horizon/server/src/metadata/index');
-const horizon_metadata = require('@horizon/server/src/metadata/metadata');
+const horizon_server = require('macro-horizon-server');
+const horizon_index = require('macro-horizon-server/src/metadata/index');
+const horizon_metadata = require('macro-horizon-server/src/metadata/metadata');
 
 const config = require('./utils/config');
 const interrupt = require('./utils/interrupt');

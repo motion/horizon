@@ -2,7 +2,7 @@
 
 const interrupt = require('./utils/interrupt');
 const config = require('./utils/config');
-const horizon_server = require('@horizon/server');
+const horizon_server = require('macro-horizon-server');
 
 const path = require('path');
 const jwt = require('jsonwebtoken');
