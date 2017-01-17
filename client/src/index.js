@@ -116,6 +116,10 @@ function Horizon({
   return horizon
 
   function injectCompany(type, options) {
+    if (options.collection === 'users') {
+      return options
+    }
+
     const companyInfo = { companyId: company }
     if (type === 'query' || type === 'subscribe') {
       if (options.find_all) {
