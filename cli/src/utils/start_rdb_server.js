@@ -1,7 +1,7 @@
 'use strict';
 
 const each_line_in_pipe = require('./each_line_in_pipe');
-const horizon_server = require('@horizon/server');
+const horizon_server = require('macro-horizon-server');
 
 const execSync = require('child_process').execSync;
 const spawn = require('child_process').spawn;

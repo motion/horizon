@@ -2,7 +2,7 @@
 'use strict'
 
 const express = require('express');
-const horizon = require('@horizon/server');
+const horizon = require('macro-horizon-server');
 
 const app = express();
 const http_server = app.listen(8181);

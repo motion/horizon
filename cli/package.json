@@ -1,5 +1,5 @@
 {
-  "name": "horizon",
+  "name": "macro-horizon",
   "version": "2.0.0",
   "description": "An open-source developer platform for building realtime, scalable web apps.",
   "main": "src/main.js",
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/rethinkdb/horizon#readme",
   "dependencies": {
-    "@horizon/server": "2.0.0",
+    "macro-horizon-server": "2.0.0",
     "argparse": "^1.0.3",
     "bluebird": "^3.4.1",
     "chalk": "^1.1.3",

@@ -40,7 +40,7 @@ pushd ../cli
 green 'Unlinking existing horizon cli'
 npm unlink
 green 'Linking horizon cli'
-npm link @horizon/server
+npm link macro-horizon-server
 npm link --cache-min 9999999
 popd
 
